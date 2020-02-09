@@ -16,9 +16,11 @@ type Reddit struct {
 }
 
 type Streaming struct {
-	CommentListInterval time.Duration
-	PostListInterval    time.Duration
-	PostListSlice       int
+	CommentListInterval         time.Duration
+	CommentListNoResultInterval time.Duration
+	PostListInterval            time.Duration
+	PostListNoResultInterva     time.Duration
+	PostListSlice               int
 }
 
 type RedditVals struct {
