@@ -148,7 +148,7 @@ func (r *Reddit) streamSubredditSubmissions(subreddit string) (<-chan models.Pos
 		for {
 			new, _ := r.Subreddit(subreddit).SubmissionsAfter(last, r.Stream.PostListSlice)
 			if len(new) < 1 {
-				time.Sleep(r.Stream.PosrtListNoResultInterval)
+				time.Sleep(r.Stream.PostListNoResultInterval)
 				continue
 			}
 			last = new[0].GetId()
@@ -175,7 +175,7 @@ func (r *Reddit) streamRedditorSubmissions(redditor string) (<-chan models.PostL
 		for {
 			new, _ := r.Redditor(redditor).SubmissionsAfter(last, r.Stream.PostListSlice)
 			if len(new) < 1 {
-				time.Sleep(r.Stream.PosrtListNoResultInterval)
+				time.Sleep(r.Stream.PostListNoResultInterval)
 				continue
 			}
 			last = new[0].GetId()
