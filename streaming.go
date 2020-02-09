@@ -22,7 +22,7 @@ func (r *Reddit) StreamCommentReplies() <-chan models.Comment {
 					r.Me().ReadMessage(v.GetId())
 				}
 			}
-			time.Sleep(r.Stream.CommentListInterval * time.Second)
+			time.Sleep(r.Stream.CommentListInterval)
 		}
 	}()
 	return c
@@ -44,7 +44,7 @@ func (r *Reddit) StreamMentions() <-chan models.Comment {
 					r.Me().ReadMessage(v.GetId())
 				}
 			}
-			time.Sleep(r.Stream.CommentListInterval * time.Second)
+			time.Sleep(r.Stream.CommentListInterval)
 		}
 	}()
 	return c
@@ -80,14 +80,14 @@ func (r *Reddit) streamSubredditComments(subreddit string) (<-chan models.Commen
 		for {
 			un, _ := r.Subreddit(subreddit).CommentsAfter("new", last, 100)
 			if len(un) < 1 {
-				time.Sleep(r.Stream.CommentListInterval * time.Second)
+				time.Sleep(r.Stream.CommentListNoResultInterval)
 				continue
 			}
 			last = un[0].GetId()
 			for _, v := range un {
 				c <- v
 			}
-			time.Sleep(r.Stream.CommentListInterval * time.Second)
+			time.Sleep(r.Stream.CommentListInterval)
 		}
 	}()
 	return c, nil
@@ -107,14 +107,14 @@ func (r *Reddit) streamRedditorComments(redditor string) (<-chan models.Comment,
 		for {
 			un, _ := r.Redditor(redditor).CommentsAfter("new", last, 100)
 			if len(un) < 1 {
-				time.Sleep(r.Stream.CommentListInterval * time.Second)
+				time.Sleep(r.Stream.CommentListNoResultInterval)
 				continue
 			}
 			last = un[0].GetId()
 			for _, v := range un {
 				c <- v
 			}
-			time.Sleep(r.Stream.CommentListInterval * time.Second)
+			time.Sleep(r.Stream.CommentListInterval)
 		}
 	}()
 	return c, nil
@@ -148,14 +148,14 @@ func (r *Reddit) streamSubredditSubmissions(subreddit string) (<-chan models.Pos
 		for {
 			new, _ := r.Subreddit(subreddit).SubmissionsAfter(last, r.Stream.PostListSlice)
 			if len(new) < 1 {
-				time.Sleep(r.Stream.PostListInterval * time.Second)
+				time.Sleep(r.Stream.PosrtListNoResultInterval)
 				continue
 			}
 			last = new[0].GetId()
 			for i := range new {
 				c <- new[len(new)-i-1]
 			}
-			time.Sleep(r.Stream.PostListInterval * time.Second)
+			time.Sleep(r.Stream.PostListInterval)
 		}
 	}()
 	return c, nil
@@ -175,14 +175,14 @@ func (r *Reddit) streamRedditorSubmissions(redditor string) (<-chan models.PostL
 		for {
 			new, _ := r.Redditor(redditor).SubmissionsAfter(last, r.Stream.PostListSlice)
 			if len(new) < 1 {
-				time.Sleep(r.Stream.PostListInterval * time.Second)
+				time.Sleep(r.Stream.PosrtListNoResultInterval)
 				continue
 			}
 			last = new[0].GetId()
 			for i := range new {
 				c <- new[len(new)-i-1]
 			}
-			time.Sleep(r.Stream.PostListInterval * time.Second)
+			time.Sleep(r.Stream.PostListInterval)
 		}
 	}()
 	return c, nil
