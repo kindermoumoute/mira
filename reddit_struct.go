@@ -19,7 +19,7 @@ type Streaming struct {
 	CommentListInterval         time.Duration
 	CommentListNoResultInterval time.Duration
 	PostListInterval            time.Duration
-	PostListNoResultInterva     time.Duration
+	PostListNoResultInterval     time.Duration
 	PostListSlice               int
 }
 
